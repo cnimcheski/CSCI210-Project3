@@ -15,8 +15,13 @@ int isAllowed(const char*cmd) {
 	// TODO
 	// return 1 if cmd is one of the allowed commands
 	// return 0 otherwise
-	printf("hello");
-	return 0;
+	for (size_t i = 0; i < 12; i++) {
+		if (strcmp(cmd, allowed[i]) == 0) {
+			return 0;
+		}
+	}
+
+	return 1;
 }
 
 int main() {
@@ -36,6 +41,13 @@ int main() {
 		if (strcmp(line,"\n")==0) continue;
 
 		line[strlen(line)-1]='\0';
+
+		// check if the command is allowed..
+		if (isAllowed(line) == 1) { 
+			printf("NOT ALLOWED!\n");
+			continue;
+		}
+		// if we make it here, we know that the command is an allowed command...now just check which command and run the command
 
 		if (strcmp(line, "exit") == 0) { 
 			break; 
