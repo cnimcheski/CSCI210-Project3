@@ -30,6 +30,7 @@ int main() {
     // Add variables as needed
 
     char line[256];
+	char *argv[21];
 
 	// infinite loop till exit command is run...
     while (1) {
@@ -41,6 +42,19 @@ int main() {
 		if (strcmp(line,"\n")==0) continue;
 
 		line[strlen(line)-1]='\0';
+
+		// tokenizing the input line into the respective command and its arguments
+        int argc = 0;
+        char *token = strtok(line, " ");
+        while (token != NULL && argc < 20) {
+            argv[argc++] = token;
+            token = strtok(NULL, " ");
+        }
+		// add a null termination to the argument list
+        argv[argc] = NULL;  
+
+        // make sure the command isn't empty for empty command
+        if (argc == 0) { continue; }
 
 		// check if the command is allowed..
 		if (isAllowed(line) == 1) { 
@@ -68,7 +82,19 @@ int main() {
 			printf("10: cd\n");
 			printf("11: exit\n");
 			printf("12: help\n");
+			continue;
 		}
+
+		if (strcmp(argv[0], "cd") == 0) {
+            if (argc > 2) {
+                printf("-rsh: cd: too many arguments\n");
+            } else if (argc == 2) {
+                if (chdir(argv[1]) != 0) {
+                    perror("cd");
+                }
+            }
+            continue;
+        }
 
 		// TODO
 		// Add code to spawn processes for the first 9 commands
