@@ -61,24 +61,9 @@ int main() {
 			printf("NOT ALLOWED!\n");
 			continue;
 		}
-		// if we make it here, we know that the command is an allowed command...now just check which command and run the command
+		// if we make it here, we know that the command is an allowed command...now just run  the correct command
 
 		// TODO
-		// Add code to spawn processes for the first 9 commands
-		// Handle external commands with posix_spawnp
-		int status;
-        pid_t pid;
-        status = posix_spawnp(&pid, argv[0], NULL, NULL, argv, environ);
-        if (status == 0) {
-			// if successful, wait for the process to complete
-            if (waitpid(pid, &status, 0) == -1) {
-                perror("waitpid");
-            }
-        } else {
-			// if failed, just print error message
-            printf("Failed to execute %s\n", argv[0]);
-        }
-
 		// And add code to execute cd, exit, help commands
 		if (strcmp(line, "exit") == 0) { 
 			break; 
@@ -111,6 +96,21 @@ int main() {
                 }
             }
             continue;
+        }
+		
+		// Add code to spawn processes for the first 9 commands
+		// Handle external commands with posix_spawnp
+		int status;
+        pid_t pid;
+        status = posix_spawnp(&pid, argv[0], NULL, NULL, argv, environ);
+        if (status == 0) {
+			// if successful, wait for the process to complete
+            if (waitpid(pid, &status, 0) == -1) {
+                perror("waitpid");
+            }
+        } else {
+			// if failed, just print error message
+            printf("Failed to execute %s\n", argv[0]);
         }
     }
 
