@@ -31,7 +31,6 @@ int main() {
 
     char line[256];
 	char *argv[21];
-	int status;
 
 	// infinite loop till exit command is run...
     while (1) {
@@ -97,10 +96,12 @@ int main() {
             continue;
         }
 
+		int status;
 		// Handle external commands with posix_spawnp
         pid_t pid;
         status = posix_spawnp(&pid, argv[0], NULL, NULL, argv, environ);
         if (status == 0) {
+			// if successful
             // Wait for the spawned process to complete
             if (waitpid(pid, &status, 0) == -1) {
                 perror("waitpid");
