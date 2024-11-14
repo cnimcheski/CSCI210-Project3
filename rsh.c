@@ -53,7 +53,7 @@ int main() {
 		// add a null termination to the argument list
         argv[argc] = NULL;  
 
-        // make sure the command isn't empty for empty command
+        // make sure the command isn't empty 
         if (argc == 0) { continue; }
 
 		// check if the command is allowed..
@@ -61,13 +61,11 @@ int main() {
 			printf("NOT ALLOWED!\n");
 			continue;
 		}
-		// if we make it here, we know that the command is an allowed command...now just run  the correct command
+		// if we make it here, we know that the command is an allowed command...now just run the correct command
 
 		// TODO
 		// And add code to execute cd, exit, help commands
-		if (strcmp(line, "exit") == 0) { 
-			break; 
-		}
+		if (strcmp(line, "exit") == 0) { break; }
 
 		if (strcmp(line, "help") == 0) {
 			// print out all the commands...
@@ -97,9 +95,8 @@ int main() {
             }
             continue;
         }
-		
+
 		// Add code to spawn processes for the first 9 commands
-		// Handle external commands with posix_spawnp
 		int status;
         pid_t pid;
         status = posix_spawnp(&pid, argv[0], NULL, NULL, argv, environ);
